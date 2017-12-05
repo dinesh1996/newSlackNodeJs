@@ -166,6 +166,7 @@ $RECYCLE.BIN/
 app.js
 bin/
 package.json
+package-lock.json
 public/
 routes/
 views/
