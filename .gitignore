@@ -1,3 +1,10 @@
+
+# Created by https://www.gitignore.io/api/node,macos,windows,jetbrains,visualstudiocode
+
+### JetBrains ###
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+
 # User-specific stuff:
 .idea/**/workspace.xml
 .idea/**/tasks.xml
@@ -28,7 +35,7 @@ cmake-build-debug/
 ## Plugin-specific files:
 
 # IntelliJ
-out/
+/out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -39,14 +46,27 @@ atlassian-ide-plugin.xml
 # Cursive Clojure plugin
 .idea/replstate.xml
 
+# Ruby plugin and RubyMine
+/.rakeTasks
+
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-### macOS template
-# General
-.DS_Store
+
+### JetBrains Patch ###
+
+# *.iml
+# modules.xml
+# .idea/misc.xml
+# *.ipr
+
+# Sonarlint plugin
+.idea/sonarlint
+
+### macOS ###
+*.DS_Store
 .AppleDouble
 .LSOverride
 
@@ -71,14 +91,15 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-### Node template
+
+### Node ###
 # Logs
 logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
+config/auth.js
 # Runtime data
 pids
 *.pid
@@ -103,7 +124,7 @@ bower_components
 # node-waf configuration
 .lock-wscript
 
-# Compiled binary addons (https://nodejs.org/api/addons.html)
+# Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
 # Dependency directories
@@ -131,23 +152,23 @@ typings/
 # dotenv environment variables file
 .env
 
-### VisualStudioCode template
+
+### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-### Windows template
+.history
+
+### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
 ehthumbs.db
 ehthumbs_vista.db
 
-# Dump file
-*.stackdump
-
 # Folder config file
-[Dd]esktop.ini
+Desktop.ini
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
@@ -160,13 +181,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
-.gitignore
-.idea/
-app.js
-bin/
-package.json
-package-lock.json
-public/
-routes/
-views/

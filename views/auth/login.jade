@@ -1,0 +1,30 @@
+extends ../layout
+
+block content
+    .container
+        .row
+            .col-md-4
+            .col-md-4
+                .card(style="padding: 20px;")
+                    form(action="/auth/login", method="POST", style="text-align: center;")
+                        .form-group
+                            input(type='text', name='username' class='form-control', placeholder='Username',required, autofocus)
+                        .form-group
+                            input(type='password', name='password' class='form-control', placeholder='Password', required)
+                        .form-group
+                            button(class='btn btn-primary btn-block', type='submit') Sign in
+                    a(href='/auth/signup') Create a new account
+                    .form-group
+                        a.btn.btn-block.btn-social.btn-twitter(href="/auth/twitter")
+                            span.fa.fa-twitter
+                            |  Sign in with Twitter
+                    .form-group
+                        a.btn.btn-block.btn-social.btn-facebook(href="/auth/username/facebook")
+                            span.fa.fa-facebook
+                            |  Sign in with facebook
+
+                    .form-group
+                        a.btn.btn-block.btn-social.btn-google(href="/auth/google")
+                            span.fa.fa-google
+                            |  Sign in with Google
+            .col-md-4
