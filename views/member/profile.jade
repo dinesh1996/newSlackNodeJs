@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+    .panel.panel-default
+        .panel-body
+            if profileProperties != null
+                p
+                | #{profileProperties.creationDate}
+                p
+                | #{profileProperties.username}
+                p
+                | #{profileProperties.firstName}
+                p
+                | #{profileProperties.lastName}
+                p
+                | #{profileProperties.password}
+                p
+                | #{profileProperties.email}
+                p
+                | #{profileProperties.censor}
+                p
+                | #{profileProperties.bannedForever}
+                p
+                | #{profileProperties.permalink}
+                p
+                | #{profileProperties.facebook}
+

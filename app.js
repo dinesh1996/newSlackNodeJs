@@ -19,10 +19,11 @@ var Message = require('./models/message');
 
 var index = require('./routes/index');
 var auth = require('./routes/auth/auth');
+var member = require('./routes/member/member');
 
 var app = express();
 
-var mongoDB = 'mongodb://127.0.0.1:27017/chatbox';
+var mongoDB = 'mongodb://127.0.0.1:27017/slack';
 mongoose.connect(mongoDB, {});
 
 // view engine setup
@@ -58,6 +59,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/auth', auth);
+app.use('/member',member);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

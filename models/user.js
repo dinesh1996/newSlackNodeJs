@@ -2,35 +2,63 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-    username:{ 
-        type:String,
-        required:true 
+    creationDate: {
+        type: Date,
+        required: true
+    },
+    username: {
+        type: String,
+        required: true
     },
     firstName: {
         type: String,
+        required: true
     },
-    lastName:String,
-    password: String,
-    email: String,
-
-    urlImg:String,
-
-    userType:String,
-    bannedForever : Boolean,
-
-    facebook : {
-        id : String,
-        token : String,
+    lastName: {
+        type: String,
+        required: true
     },
-    twitter : {
-        id : String,
-        token : String,
+    password: {
+        type: String
     },
-
-    google : {
-        id : String,
-        token : String,
+    email: {
+        type: String,
+        required: true
+    },
+    urlImg: String,
+    superSU: {
+        type: Boolean,
+        required: true
+    },
+    censor: {
+        type: Boolean,
+        required: true
+    },
+    bannedForever: {
+        type: Boolean,
+        required: true
+    },
+    permalink: {
+        type: String,
+        required: true
+    },
+    facebook: {
+        id: String,
+        token: String
+    },
+    twitter: {
+        id: String,
+        token: String
+    },
+    google: {
+        id: String,
+        token: String
+    },
+    git: {
+        id: String,
+        token: String
     }
+
 });
 
 var User = mongoose.model('User', UserSchema);
