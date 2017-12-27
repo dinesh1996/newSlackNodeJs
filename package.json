@@ -8,14 +8,21 @@
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.18.2",
+    "connect-flash": "^0.1.1",
     "connect-redis": "^3.3.2",
-    "cookie-parser": "~1.4.3",
+    "cookie-parser": "^1.4.3",
     "debug": "~2.6.9",
     "express": "~4.15.5",
+    "express-flash": "git://github.com/RGBboy/express-flash.git",
+    "express-flash-2": "^1.0.1",
     "express-session": "^1.15.6",
+    "flash": "^1.1.0",
+    "is-empty": "^1.2.0",
     "jade": "~1.11.0",
+    "md5": "^2.2.1",
     "mongoose": "^4.13.6",
     "morgan": "~1.9.0",
+    "nodemon": "^1.14.2",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-google-oauth": "^1.0.0",
@@ -26,6 +33,7 @@
     "serve-favicon": "~2.4.5",
     "socket.io": "^2.0.4",
     "socket.io-redis": "^5.2.0",
-    "sticky-session": "^1.1.2"
+    "sticky-session": "^1.1.2",
+    "validator": "^9.2.0"
   }
 }

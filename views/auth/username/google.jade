@@ -1,9 +1,9 @@
-extends ../layout
+extends ../../layout
 
 block content
     .container
         .row
-            form(action="/auth/username/facebook", method="POST")
+            form(action="/auth/username/google", method="POST")
                 input(type='text', name='username' class='form-control', placeholder='Username',required, autofocus)
                 button(class='btn btn-lg btn-primary btn-block', type='submit') Sign up
             a(href='/auth/login') I already have an account

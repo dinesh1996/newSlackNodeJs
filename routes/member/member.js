@@ -16,6 +16,18 @@ router.get('/profile/:permalink', isAuth, function (req, res) {
     });
 });
 
+router.get('/all', isAuth, function (req, res) {
+    User.find({}, function (err, items) {
+        console.log(items);
+        if (err) {
+            res.redirect('/')
+
+        } else {
+            res.render('member/membersList', {members: items});
+        }
+    });
+});
+
 module.exports = router;
 
 

@@ -1,6 +1,5 @@
 var FacebookStrategy = require('passport-facebook').Strategy;
 var Permalinks = require('permalinks');
-
 var User = require('../models/user');
 var config = require('../config/auth');
 
@@ -14,16 +13,19 @@ module.exports = function (passport) {
         },
         function (req, token, refreshToken, profile, done) {
             loginOrSignUp = function () {
-                console.log(profile);
-                console.log("la vie est belle 2");
-                console.log(req.session);
                 User.findOne({'facebook.id': profile.id}, function (err, user) {
                     if (err)
-                        return done(err);
+                        return done(err, false, {message: 'Error in sign up' + err});
 
                     if (user) {
-                        return done(null, user);
+                        req.session.authType = "FaceBook";
+                        req.session.user = user;
+                        return done(null, user, {message: 'User already exist'});
                     } else {
+                        console.log('*********************');
+                        console.log(profile);
+                        console.log('*********************');
+
                         var nUser = new User();
                         permalinks = new Permalinks();
 
@@ -32,18 +34,13 @@ module.exports = function (passport) {
                         nUser.firstName = profile.name.givenName;
                         nUser.lastName = profile.name.familyName;
                         nUser.email = profile.emails[0].value;
-                        nUser.superSU = false;
-                        nUser.censor = false;
-                        nUser.bannedForever = false;
-                        nUser.permalink = permalinks.format(':familyName-:firstName', {familyName:profile.name.familyName,firstName:profile.name.givenName,},);
                         nUser.facebook.id = profile.id;
                         nUser.facebook.token = token;
-                        nUser.save(function (err) {
-                            if (err)
-                                throw err;
+                        req.session.authType = "FaceBook";
+                        req.session.user = nUser;
+                        return done(null, nUser);
 
-                            return done(null, nUser);
-                        })
+
                     }
                 })
             }

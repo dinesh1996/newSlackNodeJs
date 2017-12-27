@@ -13,8 +13,13 @@ var ioRedis = require('socket.io-redis');
 var debug = require('debug')('chatbot:server');
 var http = require('http');
 var sticky = require('sticky-session');
+var flash = require('connect-flash');
+var client = redis.createClient();
+
 
 var User = require('./models/user');
+var Emotion = require('./models/emotion');
+var Channel = require('./models/channel');
 var Message = require('./models/message');
 
 var index = require('./routes/index');
@@ -29,47 +34,48 @@ mongoose.connect(mongoDB, {});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
-var client  = redis.createClient();
+app.use(cookieParser());
 app.use(expressSession({
-    secret : 'LavieEstBelle',
-    store : new redisStore({host: 'localhost', port: 6379, client: client, ttl : 260 }),
+    secret: 'LavieEstBelle',
+    store: new redisStore({host: 'localhost', port: 6379, client: client, ttl: 260}),
     saveUninitialized: false,
     resave: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser(function(user, done){
+
+passport.serializeUser(function (user, done) {
     done(null, user._id);
 });
-passport.deserializeUser(function(id, done){
-    User.findById(id, function(err, user){
+passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
         done(err, user);
     });
 });
+
+app.use(flash());
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/auth', auth);
-app.use('/member',member);
+app.use('/member', member);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -86,13 +92,13 @@ app.set('port', port);
 
 var server = http.createServer(app);
 var io = require('socket.io')(server);
-io.adapter(ioRedis({ host: 'localhost', port: 6379 }));
+io.adapter(ioRedis({host: 'localhost', port: 6379}));
 
 
 app.set('socketio', io);
 
 
-sticky.listen(server, port, function() {
+sticky.listen(server, port, function () {
     console.log('Server started listening on port : ' + port);
 });
 server.listen(port);

@@ -5,23 +5,29 @@ block content
         .panel-body
             if profileProperties != null
                 p
-                | #{profileProperties.creationDate}
+                | Creation Date #{profileProperties.creationDate}
                 p
-                | #{profileProperties.username}
+                | Username #{profileProperties.username}
                 p
-                | #{profileProperties.firstName}
+                | First Name #{profileProperties.firstName}
                 p
-                | #{profileProperties.lastName}
+                | Last Name #{profileProperties.lastName}
+                if profileProperties.password !== null
+                    p
+                    | Password #{profileProperties.password}
                 p
-                | #{profileProperties.password}
+                | Email  #{profileProperties.email}
                 p
-                | #{profileProperties.email}
+                | Is Censor ? : #{profileProperties.censor}
                 p
-                | #{profileProperties.censor}
+                | Is Banned forever ? ": #{profileProperties.bannedForever}
                 p
-                | #{profileProperties.bannedForever}
+                | Permalink : #{profileProperties.permalink}
                 p
-                | #{profileProperties.permalink}
+                | FaceBook :  #{profileProperties.facebook}
                 p
-                | #{profileProperties.facebook}
+                | Google :  #{profileProperties.google}
+                p
+                | Twitter :  #{profileProperties.twitter}
+
 

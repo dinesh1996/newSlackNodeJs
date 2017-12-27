@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var User = mongoose.model('User');
-var Emotion = mongoose.model('Emotion');
 
-var MessageSchema = new Schema({
+
+var EmotionSchema = new Schema({
     creationDate: {
         type: Date,
         required: true
@@ -27,18 +27,12 @@ var MessageSchema = new Schema({
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"},
-
-
-    emotions: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Emotion"
-    }]
+        ref: "User"
+    }
 
 });
 
-var Message = mongoose.model('Message', MessageSchema);
+var Emotion = mongoose.model('Emotion', EmotionSchema);
 
-module.exports = Message;
-
+module.exports = Emotion;
 

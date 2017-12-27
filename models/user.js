@@ -26,6 +26,7 @@ var UserSchema = new Schema({
         required: true
     },
     urlImg: String,
+
     superSU: {
         type: Boolean,
         required: true

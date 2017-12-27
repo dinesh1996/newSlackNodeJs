@@ -1,0 +1,35 @@
+extends ../layout
+
+block content
+    .panel.panel-default
+        .panel-body
+            each profileProperties in members
+                h3 member suite
+                if profileProperties != null
+                    p
+                    | Creation Date #{profileProperties.creationDate}
+                    p
+                    | Username #{profileProperties.username}
+                    p
+                    | First Name #{profileProperties.firstName}
+                    p
+                    | Last Name #{profileProperties.lastName}
+                    if profileProperties.password !== null
+                        p
+                        | Password #{profileProperties.password}
+                    p
+                    | Email  #{profileProperties.email}
+                    p
+                    | Is Censor ? : #{profileProperties.censor}
+                    p
+                    | Is Banned forever ? ": #{profileProperties.bannedForever}
+                    p
+                    | Permalink : #{profileProperties.permalink}
+                    p
+                    | FaceBook :  #{profileProperties.facebook}
+                    p
+                    | Google :  #{profileProperties.google}
+                    p
+                    | Twitter :  #{profileProperties.twitter}
+
+

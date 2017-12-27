@@ -2,10 +2,15 @@ extends ../layout
 
 block content
     .container
+        .error #{message}
         .row
             form(action="/auth/signup", method="POST")
                 input(type='text', name='username' class='form-control', placeholder='Username',required, autofocus)
                 input(type='password', name='password' class='form-control', placeholder='Password', required)
                 input(type='email', name='email' class='form-control', placeholder='Email', required)
+                input(type='text', name='firstName' class='form-control', placeholder='First Name', required)
+                input(type='text', name='lastName' class='form-control', placeholder='Last Name', required)
                 button(class='btn btn-lg btn-primary btn-block', type='submit') Sign up
-            a(href='/auth/login') I alre §ady have an account
+                a(href='/auth/login') I already have an account
+
+
