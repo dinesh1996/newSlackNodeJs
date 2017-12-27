@@ -1,2 +1,2 @@
 # newSlackNodeJs
-Create an light version of Slack
+Create a light version of Slack using Node JS
