@@ -16,6 +16,24 @@ block content
                 if messages.length > 0
                     each message in messages
                         .element
+                            each  emotion in message.emotions
+                                if emotion.context === 'thumbsUp'
+                                    i.fa.fa-thumbs-o-up
+                                if emotion.context === 'heart'
+                                    i.fa.fa-heart
+                                if emotion.context === 'smile'
+                                    i.fa.fa-smile-o
+                                if emotion.context === 'thumbsDown'
+                                    i.fa.fa-thumbs-o-dow
+                                if emotion.context === 'ban'
+                                    i.fa.fa-ban
+                                if emotion.context === 'btc'
+                                    i.fa.fa-btc
+                                if emotion.context === 'warning'
+                                    i.fa.fa-exclamation-triangle
+                                if emotion.context === 'magic'
+                                    i.fa.fa-magic
+
 
                             | #{message.author.username} :
                             | !{message.context}
