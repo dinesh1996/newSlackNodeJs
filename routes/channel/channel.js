@@ -29,15 +29,21 @@ router.get('/chat/:permalink', isAuth, function (req, res) {
 
 
                     var isHere = false;
+                    var isAdmin = false;
                     for (var i = 0; i < channel.authorizedMembers.length; i++) {
                         if (channel.authorizedMembers[i].id === req.user.id) {
                             isHere = true;
                         }
                     }
+
                     if (isHere) {
                         console.log("****Channel****");
                         console.log("Yo");
-
+                        for (var o = 0; o < channel.adminMembers.length; o++) {
+                            if (channel.adminMembers[o].id === req.user.id) {
+                                isAdmin = true;
+                            }
+                        }
                         for (var y = 0; y < messages.length; y++) {
                             if (messages[y].censor === true) {
                                 messages[y].context = md.render('__Censored Message__');
@@ -46,7 +52,7 @@ router.get('/chat/:permalink', isAuth, function (req, res) {
                                 messages[y].context = md.render('__Deleted Message__');
                             }
                         }
-                        res.render('channel/chat', {messages: messages, markdown: md});
+                        res.render('channel/chat', {messages: messages, admin: isAdmin, markdown: md});
 
                     }
                     else {
@@ -517,7 +523,7 @@ router.post('/admin/censor-user/:permalink', isAuth, function (req, res) {
                         Message.find({'author': user}).sort({'creationDate': -1}).populate('author')
                             .populate('channel')
                             .populate('emotions').exec(function (err, messages) {
-                            for (var i = 0; i < items.length; i++) {
+                            for (var i = 0; i < messages.length; i++) {
                                 messages[i].censor = true;
                                 messages[i].save();
                             }
@@ -543,6 +549,191 @@ router.post('/admin/censor-user/:permalink', isAuth, function (req, res) {
         }
     });
 });
+
+router.get('/admin/kick-user/:permalink', isAuth, function (req, res) {
+    Channel.findOne({permalink: req.params.permalink}).sort({'creationDate': -1}).populate('authorizedMembers').populate("adminMembers").exec(function (err, channel) {
+        if (err) {
+            throw err;
+        }
+        if (req.user && channel) {
+            var isHere = false;
+            for (var i = 0; i < channel.adminMembers.length; i++) {
+                if (channel.adminMembers[i].id === req.user.id) {
+                    isHere = true;
+                }
+            }
+
+            if (isHere) {
+                console.log("****Channel****");
+                res.render('channel/admin/kick-user', {channel: channel});
+
+            } else {
+                console.log("****Channel****");
+                console.log("User not allowed");
+                res.redirect('/channel/info/' + channel.permalink);
+            }
+        }
+        else {
+            console.log("user is not in req or channel");
+            res.redirect('/channel/all');
+        }
+
+    });
+});
+
+router.post('/admin/kick-user/:permalink', isAuth, function (req, res) {
+
+    console.log("****Channel****");
+    console.log(req.body.tokick);
+    Channel.findOne({permalink: req.params.permalink}).populate('authorizedMembers').populate("adminMembers").exec(function (err, channel) {
+        if (err) {
+            throw err;
+        }
+        console.log("****Channel2****");
+
+        if (req.user && channel) {
+            var isOkToKick = false;
+            var isAdmin = false;
+            for (var i = 0; i < channel.authorizedMembers.length; i++) {
+                if (channel.authorizedMembers[i].id === req.body.tokick) {
+                    isOkToKick = true;
+                }
+            }
+            for (var y = 0; y < channel.adminMembers.length; y++) {
+                if (channel.adminMembers[y].id === req.body.tokick) {
+                    isAdmin = true;
+                }
+            }
+            if (isOkToKick) {
+                console.log("****Channel****");
+                User.findById(req.body.tokick, function (err, user) {
+                    if (err) {
+                        throw err;
+                    }
+                    if (user) {
+                        if (isAdmin) {
+                            channel.adminMembers.remove(user);
+                        }
+                        channel.authorizedMembers.remove(user);
+
+                        channel.save(function (err) {
+                            if (err) {
+                                console.log("****Merde****");
+                                throw err;
+                            }
+                        });
+                        user.kicked++;
+                        user.save(function (err) {
+                            if (err) {
+                                console.log("****Merde****");
+                                throw err;
+                            }
+                        });
+                    }
+                });
+                console.log("User will be delete");
+                res.redirect('/channel/info/' + channel.permalink);
+
+            } else {
+                console.log("user is not in req or channel");
+                res.redirect('/channel/all');
+            }
+        }
+    });
+});
+
+router.get('/admin/ban-user/:permalink', isAuth, function (req, res) {
+    Channel.findOne({permalink: req.params.permalink}).sort({'creationDate': -1}).populate('authorizedMembers').populate("adminMembers").exec(function (err, channel) {
+        if (err) {
+            throw err;
+        }
+        if (channel) {
+            var isHere = false;
+            for (var i = 0; i < channel.adminMembers.length; i++) {
+                if (channel.adminMembers[i].id === req.user.id) {
+                    isHere = true;
+                }
+            }
+
+            if (isHere) {
+                console.log("****Channel****");
+                res.render('channel/admin/ban-user', {channel: channel});
+
+            } else {
+                console.log("****Channel****");
+                console.log("User not allowed");
+                res.redirect('/channel/info/' + channel.permalink);
+            }
+        }
+        else {
+            console.log("user is not in req or channel");
+            res.redirect('/channel/all');
+        }
+
+    });
+});
+
+router.post('/admin/ban-user/:permalink', isAuth, function (req, res) {
+
+    console.log("****Channel****");
+    console.log(req.body.tokick);
+    Channel.findOne({permalink: req.params.permalink}).populate('authorizedMembers').populate("adminMembers").exec(function (err, channel) {
+        if (err) {
+            throw err;
+        }
+        console.log("****Channel2****");
+
+        if (req.user && channel) {
+            var isOkToBan = false;
+            var isAdmin = false;
+            for (var i = 0; i < channel.authorizedMembers.length; i++) {
+                if (channel.authorizedMembers[i].id === req.body.toban) {
+                    isOkToBan = true;
+                }
+            }
+            for (var y = 0; y < channel.adminMembers.length; y++) {
+                if (channel.adminMembers[y].id === req.body.toban) {
+                    isAdmin = true;
+                }
+            }
+            if (isOkToBan) {
+                console.log("****Channel****");
+                User.findById(req.body.toban, function (err, user) {
+                    if (err) {
+                        throw err;
+                    }
+                    if (user) {
+                        if (isAdmin) {
+                            channel.adminMembers.remove(user);
+                        }
+                        channel.authorizedMembers.remove(user);
+                        channel.bannedMember.push(user);
+                        channel.save(function (err) {
+                            if (err) {
+                                console.log("****Merde****");
+                                throw err;
+                            }
+                        });
+                        user.kicked++;
+                        user.save(function (err) {
+                            if (err) {
+                                console.log("****Merde****");
+                                throw err;
+                            }
+                        });
+                    }
+                });
+                console.log("User will be delete");
+                res.redirect('/channel/info/' + channel.permalink);
+
+            } else {
+                console.log("user is not in req or channel");
+                res.redirect('/channel/all');
+            }
+        }
+    });
+});
+
 
 module.exports = router;
 

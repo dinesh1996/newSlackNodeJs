@@ -12,6 +12,7 @@
     "connect-redis": "^3.3.2",
     "cookie-parser": "^1.4.3",
     "debug": "~2.6.9",
+    "emoji": "^0.3.2",
     "express": "~4.15.5",
     "express-flash": "git://github.com/RGBboy/express-flash.git",
     "express-flash-2": "^1.0.1",

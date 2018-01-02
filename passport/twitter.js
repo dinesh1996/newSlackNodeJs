@@ -35,7 +35,6 @@ module.exports = function (passport) {
                         console.log("********The End******");
 
                         nUser.creationDate = new Date();
-                        nUser.isActivated = true;
                         nUser.username = profile.username;
                         let name = profile.displayName.split(" ");
                         nUser.firstName = name[0];

@@ -24,17 +24,20 @@ var MessageSchema = new Schema({
     },
     author: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"},
+        ref: "User"
+    },
 
-    channel:{
+    channel: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Channel"},
+        ref: "Channel"
+    },
 
 
     emotions: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Emotion"
-    }]
+    }],
+
 
 });
 

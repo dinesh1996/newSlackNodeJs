@@ -12,10 +12,59 @@ block content
         .panel-body
             a(href='https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet' target='_blank') Markdown Hit
 
-            ul#messagesList
+            #messagesList
                 if messages.length > 0
                     each message in messages
-                        li
-                            | #{message.author.username} : !{message.context}
+                        .element
+
+                            | #{message.author.username} :
+                            | !{message.context}
+                            .row
+                                if !message.censor && admin
+                                    .col
+                                        form(action='/message/censor/' + message.id, method="POST")
+                                            input.btn.btn-warning(type="submit", value="Censor")
+                                if  message.published === true
+                                    .col
+                                        form(action='/message/delete/' + message.id, method="POST")
+                                            input.btn.btn-danger(type="submit", value="Delete")
+
+
+
+                            .row
+                                .col
+                                    form(action='/emotion/create/' + message.id, method="POST")
+                                        input#prodId(name='emo', type='hidden', value='thumbsUp')
+                                        button.fa.fa-thumbs-o-up(type='submit', aria-hidden='true')
+                                .col
+                                    form(action='/emotion/create/' + message.id, method="POST")
+                                        input#prodId(name='emo', type='hidden', value='heart')
+                                        button.fa.fa-heart-o(type='submit', aria-hidden='true')
+                                .col
+                                    form(action='/emotion/create/' + message.id, method="POST")
+                                        input#prodId(name='emo', type='hidden', value='smile')
+                                        button.fa.fa-smile-o(type='submit', aria-hidden='true')
+                                .col
+                                    form(action='/emotion/create/' + message.id, method="POST")
+                                        input#prodId(name='emo', type='hidden', value='thumbsDown')
+                                        button.fa.fa-thumbs-o-down(type='submit', aria-hidden='true')
+                                .col
+                                    form(action='/emotion/create/' + message.id, method="POST")
+                                        input#prodId(name='emo', type='hidden', value='ban')
+                                        button.fa.fa-ban(type='submit', aria-hidden='true')
+
+                                .col
+                                    form(action='/emotion/create/' + message.id, method="POST")
+                                        input#prodId(name='emo', type='hidden', value='btc')
+                                        button.fa.fa-btc(type='submit', aria-hidden='true')
+
+                                .col
+                                    form(action='/emotion/create/' + message.id, method="POST")
+                                        input#prodId(name='emo', type='hidden', value='warning')
+                                        button.fa.fa-exclamation-triangle(type='submit', aria-hidden='true')
+                                .col
+                                    form(action='/emotion/create/' + message.id, method="POST")
+                                        input#prodId(name='emo', type='hidden', value='magic')
+                                        button.fa.fa-magic(type='submit', aria-hidden='true')
                 else
                     li Pas de messages dans ce chat ! :(

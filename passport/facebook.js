@@ -34,7 +34,7 @@ module.exports = function (passport) {
                         permalinks = new Permalinks();
 
                         nUser.creationDate = new Date();
-                        nUser.isActivated = true;
+                        nUser.kicked = 0;
                         nUser.username = req.session.username;
                         nUser.firstName = profile.name.givenName;
                         nUser.lastName = profile.name.familyName;

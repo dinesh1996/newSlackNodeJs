@@ -1,36 +1,43 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var passport = require('passport');
-var expressSession = require('express-session');
-var redis = require('redis');
-var redisStore = require('connect-redis')(expressSession);
-var ioRedis = require('socket.io-redis');
-var debug = require('debug')('chatbot:server');
-var http = require('http');
-var sticky = require('sticky-session');
-var flash = require('connect-flash');
-var client = redis.createClient();
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const expressSession = require('express-session');
+const redis = require('redis');
+const redisStore = require('connect-redis')(expressSession);
+const ioRedis = require('socket.io-redis');
+const debug = require('debug')('chatbot:server');
+const http = require('http');
+const sticky = require('sticky-session');
+const flash = require('connect-flash');
+const client = redis.createClient();
+const port = 3000;
 
 
-var User = require('./models/user');
-var Emotion = require('./models/emotion');
-var Channel = require('./models/channel');
-var Message = require('./models/message');
 
-var index = require('./routes/index');
-var auth = require('./routes/auth/auth');
-var member = require('./routes/member/member');
-var channel = require('./routes/channel/channel');
-var message = require('./routes/message/message');
+const User = require('./models/user');
+const Channel = require('./models/channel');
+const Emotion = require('./models/emotion');
+const Message = require('./models/message');
 
-var app = express();
 
-var mongoDB = 'mongodb://127.0.0.1:27017/slack';
+const index = require('./routes/index');
+const auth = require('./routes/auth/auth');
+const member = require('./routes/member/member');
+const channel = require('./routes/channel/channel');
+const message = require('./routes/message/message');
+const emotion = require('./routes/emotion/emotion');
+
+const app = express();
+const server = http.createServer(app);
+const io = require('socket.io')(server);
+
+
+const mongoDB = 'mongodb://127.0.0.1:27017/slack';
 mongoose.connect(mongoDB, {});
 
 // view engine setup
@@ -70,6 +77,7 @@ app.use('/auth', auth);
 app.use('/member', member);
 app.use('/channel', channel);
 app.use('/message', message);
+app.use('/emotion', emotion);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -89,13 +97,8 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
-
-var port = 3000;
 app.set('port', port);
 
-
-var server = http.createServer(app);
-var io = require('socket.io')(server);
 io.adapter(ioRedis({host: 'localhost', port: 6379}));
 
 app.set('socketio', io);
@@ -105,6 +108,9 @@ sticky.listen(server, port, function () {
 });
 server.listen(port);
 
+io.on('connection', socket => {
+    socket.emit("HELLO", { hello: 'world' });
+});
 server.on('error', onError);
 server.on('listening', onListening);
 

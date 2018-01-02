@@ -1,0 +1,14 @@
+extends ../../layout
+
+block content
+    .panel.panel-default
+        .panel-body
+
+            h2 Channel will be delete:
+            form(action="/member/super-admin/remover/channel" , method="POST").form-horizontal
+                .form-group
+                    label(for='todelete') Select An Channel:
+                    select(name='todelete' data-style='btn-primary')#todelete.form-control
+                        each channel in channels
+                            option(value=channel.id)  #{channel.name}
+                    button(class='btn btn-lg btn-primary btn-block', type='submit') Send

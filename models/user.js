@@ -7,6 +7,11 @@ var UserSchema = new Schema({
         required: true
     },
 
+    kicked: {
+        type: Number,
+        required: true
+    },
+
     isActivated: {
         type: Boolean,
         required: true
