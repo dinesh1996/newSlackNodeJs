@@ -33,6 +33,7 @@ module.exports = function (passport) {
                         var nUser = new User();
                         nUser.password = createHash(password);
                         nUser.creationDate = new Date();
+                        nUser.isActivated = true;
                         nUser.username = req.body.username;
                         nUser.firstName = req.body.firstName;
                         nUser.lastName = req.body.lastName;

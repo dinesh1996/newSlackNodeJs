@@ -1,0 +1,21 @@
+extends ../layout
+block content
+
+    .panel.panel-default
+        .panel-heading
+            form.form-horizontal(action="/message/create", method="POST")
+                .form-group
+                    .label.col-md-2(for="message")
+                    .input-group
+                        input#message(name="context", type="text", placeholder="What are you up to today?")
+                        input.btn.btn-default(type="submit", value="Go !")
+        .panel-body
+            a(href='https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet' target='_blank') Markdown Hit
+
+            ul#messagesList
+                if messages.length > 0
+                    each message in messages
+                        li
+                            | #{message.author.username} : !{message.context}
+                else
+                    li Pas de messages dans ce chat ! :(

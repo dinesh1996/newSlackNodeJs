@@ -1,0 +1,15 @@
+extends ../../layout
+
+block content
+    .panel.panel-default
+        .panel-body
+
+            h2 Delete user from :  #{channel.name}
+            h3 The user will be delete from the Slack....
+            form(action="/channel/admin/delete-user/" + channel.permalink , method="POST").form-horizontal
+                .form-group
+                    label(for='todelete') Select Admin:
+                    select(name='todelete' data-style='btn-primary')#todelete.form-control
+                        each authorizedMember in channel.authorizedMembers
+                            option(value=authorizedMember.id)  #{authorizedMember.username}
+                    button(class='btn btn-lg btn-primary btn-block', type='submit') Send

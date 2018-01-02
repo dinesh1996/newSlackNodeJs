@@ -25,6 +25,8 @@ var Message = require('./models/message');
 var index = require('./routes/index');
 var auth = require('./routes/auth/auth');
 var member = require('./routes/member/member');
+var channel = require('./routes/channel/channel');
+var message = require('./routes/message/message');
 
 var app = express();
 
@@ -66,6 +68,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/auth', auth);
 app.use('/member', member);
+app.use('/channel', channel);
+app.use('/message', message);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -94,9 +98,7 @@ var server = http.createServer(app);
 var io = require('socket.io')(server);
 io.adapter(ioRedis({host: 'localhost', port: 6379}));
 
-
 app.set('socketio', io);
-
 
 sticky.listen(server, port, function () {
     console.log('Server started listening on port : ' + port);

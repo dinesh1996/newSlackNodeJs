@@ -1,0 +1,17 @@
+extends ../../layout
+
+block content
+    .panel.panel-default
+        .panel-body
+
+            h2 Add a new admin to the channel :  #{channel.name}
+
+            form(action="/channel/admin/be-admin/" + channel.permalink , method="POST")
+                .form-group
+                    label(for='admin') Select Admin:
+                    select(name='admin')#admin.form-control
+                        each authorizedMember in channel.authorizedMembers
+                            option(value=authorizedMember.id)  #{authorizedMember.username}
+                    button(class='btn btn-lg btn-primary btn-block', type='submit') Send
+
+

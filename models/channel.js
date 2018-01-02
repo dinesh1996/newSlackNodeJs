@@ -16,16 +16,24 @@ var ChannelSchema = new Schema({
         required: true
     },
 
-    authorizedMember:
+    authorizedMembers:
         [{type: mongoose.Schema.Types.ObjectId, ref: "User"}
         ],
-    BannedMember:
+
+    adminMembers:
+        [{type: mongoose.Schema.Types.ObjectId, ref: "User"}
+        ],
+    bannedMember:
         [{type: mongoose.Schema.Types.ObjectId, ref: "User"}
         ],
     privateChannel: {
         type: Boolean,
         required: true
-    }
+    },
+    permalink: {
+        type: String,
+        required: true
+    },
 
 
 });

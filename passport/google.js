@@ -17,9 +17,13 @@ module.exports = function (passport) {
                         return done(err);
 
                     if (user) {
-                        req.session.authType = "Google";
-                        req.session.user = user;
-                        return done(null, user);
+                        if (user.isActivated) {
+                            req.session.authType = "Google";
+                            req.session.user = user;
+                            return done(null, user, {message: 'User already exist'});
+                        } else {
+                            return done(err, false, {message: 'User was delete for good reasons'});
+                        }
                     } else {
 
                         var nUser = new User();
@@ -30,7 +34,8 @@ module.exports = function (passport) {
                         console.log("********The End******");
 
                         nUser.creationDate = new Date();
-                       // nUser.username = req.session.username;
+                        nUser.isActivated = true;
+                        // nUser.username = req.session.username;
                         nUser.firstName = profile.name.givenName;
                         nUser.lastName = profile.name.familyName;
                         nUser.email = profile.emails[0].value;

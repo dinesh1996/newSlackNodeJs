@@ -8,7 +8,7 @@ module.exports = function (passport) {
             consumerKey: config.twitter.consumerKey,
             consumerSecret: config.twitter.consumerSecret,
             callbackURL: config.twitter.callback,
-            passReqToCallback : true,
+            passReqToCallback: true,
             includeEmail: true
 
         },
@@ -19,9 +19,12 @@ module.exports = function (passport) {
                         return done(err);
 
                     if (user) {
-                        req.session.authType = "Twitter";
-                        req.session.user = user;
-                        return done(null, user);
+                        if (user.isActivated) {
+                            req.session.user = user;
+                            return done(null, user, {message: 'User already exist'});
+                        } else {
+                            return done(err, false, {message: 'User was delete for good reasons'});
+                        }
                     } else {
 
                         var nUser = new User();
@@ -32,6 +35,7 @@ module.exports = function (passport) {
                         console.log("********The End******");
 
                         nUser.creationDate = new Date();
+                        nUser.isActivated = true;
                         nUser.username = profile.username;
                         let name = profile.displayName.split(" ");
                         nUser.firstName = name[0];

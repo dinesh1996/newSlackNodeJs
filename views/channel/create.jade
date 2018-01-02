@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+    .container
+        .error #{message}
+        .row
+            h2 Creation of the new channel
+            form(action="/channel/create/", method="POST")
+                input(type='text', name='name' class='form-control', placeholder='Channel Name', required, autofocus)
+                button(class='btn btn-lg btn-primary btn-block', type='submit') Send

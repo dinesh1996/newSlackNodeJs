@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var User = mongoose.model('User');
+var Channel = mongoose.model('Channel');
 var Emotion = mongoose.model('Emotion');
 
 var MessageSchema = new Schema({
@@ -9,10 +10,6 @@ var MessageSchema = new Schema({
         required: true
     },
     context: {
-        type: String,
-        required: true
-    },
-    author: {
         type: String,
         required: true
     },
@@ -25,9 +22,13 @@ var MessageSchema = new Schema({
         type: Boolean,
         required: true
     },
-    user: {
+    author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"},
+
+    channel:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Channel"},
 
 
     emotions: [{

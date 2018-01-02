@@ -12,10 +12,6 @@ var EmotionSchema = new Schema({
         type: String,
         required: true
     },
-    author: {
-        type: String,
-        required: true
-    },
     censor: {
         type: Boolean,
         required: true
@@ -25,7 +21,12 @@ var EmotionSchema = new Schema({
         type: Boolean,
         required: true
     },
-    user: {
+
+    channel:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Channel"},
+
+    author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }

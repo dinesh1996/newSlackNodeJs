@@ -26,7 +26,8 @@ module.exports = function (passport) {
                             return done(null, false, {message: "User or/and password was/were wrong"});
 
                         }
-                        if (user && isValidPassword(user, password)) {
+                        if (user && user.isActivated === true && isValidPassword(user, password)) {
+
                             return done(null, user);
                         }
                     return done(null, false, {message: "User or/and password was/were wrong"});

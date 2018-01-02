@@ -1,0 +1,91 @@
+extends ../layout
+
+block content
+    .panel.panel-default
+        .panel-body
+            if channels != null
+                each channel in channels
+                    h2 Channel info
+                    if channel != null
+                        p
+                            | name #{channel.name}
+
+                        a(href='/channel/join/#{channel.permalink}') join this channel ?
+                        p
+                        | Creation Date  #{channel.creationDate}
+                        p
+                        | Update Date #{channel.updateDate}
+
+                        h2 authorizedMember
+                        each authorizedMember in channel.authorizedMembers
+                            h3 member auth
+                            if authorizedMember != null
+                                p
+                                | Creation Date #{authorizedMember.creationDate}
+                                p
+                                | Username #{authorizedMember.username}
+                                p
+                                | First Name #{authorizedMember.firstName}
+                                p
+                                | Last Name #{authorizedMember.lastName}
+                                if authorizedMember.password !== null
+                                    p
+                                    | Password #{authorizedMember.password}
+                                p
+                                | Email  #{authorizedMember.email}
+                                p
+                                | Is Censor ? : #{authorizedMember.censor}
+                                p
+                                | Is Banned forever ? ": #{authorizedMember.bannedForever}
+                                p
+                                | Permalink : #{authorizedMember.permalink}
+                                if authorizedMember.facebook !== null
+                                    p
+                                    | FaceBook :  #{authorizedMember.facebook}
+                                if authorizedMember.google !== null
+                                    p
+                                    | Google :  #{authorizedMember.google}
+                                if authorizedMember.twitter !== null
+                                    p
+                                    | Twitter :  #{authorizedMember.twitter}
+
+                        h2 adminMembers
+                        each adminMember in channel.adminMembers
+                            h3 member admin..
+                            if adminMember != null
+                                p
+                                | Creation Date #{adminMember.creationDate}
+                                p
+                                | Username #{adminMember.username}
+                                p
+                                | First Name #{adminMember.firstName}
+                                p
+                                | Last Name #{adminMember.lastName}
+                                if adminMember.password !== null
+                                    p
+                                    | Password #{adminMember.password}
+                                p
+                                | Email  #{adminMember.email}
+                                p
+                                | Is Censor ? : #{adminMember.censor}
+                                p
+                                | Is Banned forever ? ": #{adminMember.bannedForever}
+                                p
+                                | Permalink : #{adminMember.permalink}
+                                if adminMember.facebook !== null
+                                    p
+                                    | FaceBook :  #{adminMember.facebook}
+                                if adminMember.google !== null
+                                    p
+                                    | Google :  #{adminMember.google}
+                                if adminMember.twitter !== null
+                                    p
+                                    | Twitter :  #{adminMember.twitter}
+
+                        p
+                        | privateChannel #{channel.privateChannel}
+                        p
+                        | Permalink : #{channel.permalink}
+
+            else
+                h1 Nothing to show ....

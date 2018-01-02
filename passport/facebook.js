@@ -18,9 +18,13 @@ module.exports = function (passport) {
                         return done(err, false, {message: 'Error in sign up' + err});
 
                     if (user) {
-                        req.session.authType = "FaceBook";
-                        req.session.user = user;
-                        return done(null, user, {message: 'User already exist'});
+                        if (user.isActivated) {
+                            req.session.authType = "FaceBook";
+                            req.session.user = user;
+                            return done(null, user, {message: 'User already exist'});
+                        } else {
+                            return done(err, false, {message: 'User was delete for good reasons'});
+                        }
                     } else {
                         console.log('*********************');
                         console.log(profile);
@@ -30,6 +34,7 @@ module.exports = function (passport) {
                         permalinks = new Permalinks();
 
                         nUser.creationDate = new Date();
+                        nUser.isActivated = true;
                         nUser.username = req.session.username;
                         nUser.firstName = profile.name.givenName;
                         nUser.lastName = profile.name.familyName;

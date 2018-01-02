@@ -6,6 +6,11 @@ var UserSchema = new Schema({
         type: Date,
         required: true
     },
+
+    isActivated: {
+        type: Boolean,
+        required: true
+    },
     username: {
         type: String,
         required: true

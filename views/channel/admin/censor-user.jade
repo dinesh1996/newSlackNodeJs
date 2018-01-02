@@ -1,0 +1,15 @@
+extends ../../layout
+
+block content
+    .panel.panel-default
+        .panel-body
+
+            h2 Censor a User of the channel :  #{channel.name}
+
+            form(action="/channel/admin/censor-user/" + channel.permalink , method="POST").form-horizontal
+                .form-group
+                    label(for='tocensor') Select Admin:
+                    select(name='tocensor' data-style='btn-primary')#tocensor.form-control
+                        each authorizedMember in channel.authorizedMembers
+                            option(value=authorizedMember.id)  #{authorizedMember.username}
+                    button(class='btn btn-lg btn-primary btn-block', type='submit') Send

@@ -65,6 +65,7 @@ router.post('/username/facebook', function (req, res) {
         } else {
             console.log("********3******");
             nUser.creationDate = new Date();
+            nUser.isActivated= true;
             nUser.username = req.body.username;
             nUser.firstName = req.session.user.firstName;
             nUser.lastName = req.session.user.lastName;
@@ -141,6 +142,7 @@ router.post('/username/google', function (req, res) {
         } else {
             console.log("********3******");
             nUser.creationDate = new Date();
+            nUser.isActivated = true;
             nUser.username = req.body.username;
             nUser.firstName = req.session.user.firstName;
             nUser.lastName = req.session.user.lastName;
@@ -218,6 +220,7 @@ router.post('/username/twitter', function (req, res) {
         } else {
             console.log("********3******");
             nUser.creationDate = new Date();
+            nUser.isActivated = true;
             nUser.username = req.body.username;
             nUser.firstName = req.session.user.firstName;
             nUser.lastName = req.session.user.lastName;
