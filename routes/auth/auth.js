@@ -32,9 +32,7 @@ router.get('/facebook/callback', passport.authenticate('facebook', {
 
 router.get('/username/facebook', function (req, res) {
 
-    console.log('**************');
-    console.log(req.session);
-    console.log('**************');
+
 
     if (Object.keys(req.session.passport).length === 0) {
         res.render('auth/username/faceBook', {message: req.flash('error')});
@@ -44,7 +42,7 @@ router.get('/username/facebook', function (req, res) {
                 throw err;
             }
             if (user) {
-                console.log('ok facebook');
+
                 res.redirect("/member/profile/" + req.session.user.permalink);
             }
         });
@@ -55,15 +53,15 @@ router.post('/username/facebook', function (req, res) {
     const permalinks = new Permalinks();
     let nUser = new User();
     User.findOne({'username': req.body.username}, function (err, user) {
-        console.log("********2******");
+
         if (err) {
-            console.log('error---');
+
             throw err;
         }
         if (user) {
             res.redirect('/auth/facebook');
         } else {
-            console.log("********3******");
+
             nUser.creationDate = new Date();
             nUser.isActivated= true;
             nUser.kicked= 0;
@@ -78,7 +76,7 @@ router.post('/username/facebook', function (req, res) {
                 nUser.facebook.id = req.session.user.facebook.id;
                 nUser.facebook.token = req.session.user.facebook.token;
             }
-            console.log("********4******");
+
             const md5User = md5(req.body.username + 'message' + req.body.username);
             nUser.permalink = permalinks.format(':username', {
                 username: md5User
@@ -86,14 +84,13 @@ router.post('/username/facebook', function (req, res) {
 
             nUser.save(function (err) {
                 if (err) {
-                    console.log("****Merde****");
+                   ;
                     throw err;
                 }
-                console.log("****Good****");
-                console.log("********6******");
+
             });
             if (validator.equals(req.session.authType, "FaceBook")) {
-                console.log("********creation3******");
+
                 res.redirect("/auth/facebook");
             }
         }
@@ -121,7 +118,7 @@ router.get('/username/google', function (req, res) {
                 throw err;
             }
             if (user) {
-                console.log('ok google');
+
                 res.redirect("/member/profile/" + req.session.user.permalink);
             }
         });
@@ -133,15 +130,15 @@ router.post('/username/google', function (req, res) {
     const permalinks = new Permalinks();
     let nUser = new User();
     User.findOne({'username': req.body.username}, function (err, user) {
-        console.log("********2******");
+
         if (err) {
-            console.log('error---');
+
             throw err;
         }
         if (user) {
             res.redirect('/auth/google');
         } else {
-            console.log("********3******");
+
             nUser.creationDate = new Date();
             nUser.isActivated = true;
             nUser.kicked = 0;
@@ -156,7 +153,7 @@ router.post('/username/google', function (req, res) {
                 nUser.google.id = req.session.user.google.id;
                 nUser.google.token = req.session.user.google.token;
             }
-            console.log("********4******");
+
             const md5User = md5(req.body.username + 'message' + req.body.username);
             nUser.permalink = permalinks.format(':username', {
                 username: md5User
@@ -164,14 +161,13 @@ router.post('/username/google', function (req, res) {
 
             nUser.save(function (err) {
                 if (err) {
-                    console.log("****Merde****");
+
                     throw err;
                 }
-                console.log("****Good****");
-                console.log("********6******");
+
             });
             if (validator.equals(req.session.authType, "Google")) {
-                console.log("********creation3******");
+
                 res.redirect("/auth/google");
             }
         }
@@ -200,7 +196,7 @@ router.get('/username/twitter', function (req, res) {
                 throw err;
             }
             if (user) {
-                console.log('ok twitter');
+
                 res.redirect("/member/profile/" + req.session.user.permalink);
             }
         });
@@ -212,15 +208,15 @@ router.post('/username/twitter', function (req, res) {
     const permalinks = new Permalinks();
     let nUser = new User();
     User.findOne({'username': req.body.username}, function (err, user) {
-        console.log("********2******");
+
         if (err) {
-            console.log('error---');
+
             throw err;
         }
         if (user) {
             res.redirect('/auth/twitter');
         } else {
-            console.log("********3******");
+
             nUser.creationDate = new Date();
             nUser.isActivated = true;
             nUser.kicked = 0;
@@ -235,7 +231,7 @@ router.post('/username/twitter', function (req, res) {
                 nUser.twitter.id = req.session.user.twitter.id;
                 nUser.twitter.token = req.session.user.twitter.token;
             }
-            console.log("********4******");
+
             const md5User = md5(req.body.username + 'message' + req.body.username);
             nUser.permalink = permalinks.format(':username', {
                 username: md5User
@@ -243,14 +239,14 @@ router.post('/username/twitter', function (req, res) {
 
             nUser.save(function (err) {
                 if (err) {
-                    console.log("****Merde****");
+
                     throw err;
                 }
-                console.log("****Good****");
-                console.log("********6******");
+              ;
             });
             if (validator.equals(req.session.authType, "Twitter")) {
-                console.log("********creation3******");
+
+
                 res.redirect("/auth/twitter");
             }
         }

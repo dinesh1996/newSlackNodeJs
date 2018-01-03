@@ -37,8 +37,7 @@ router.get('/chat/:permalink', isAuth, function (req, res) {
                     }
 
                     if (isHere) {
-                        console.log("****Channel****");
-                        console.log("Yo");
+
                         for (var o = 0; o < channel.adminMembers.length; o++) {
                             if (channel.adminMembers[o].id === req.user.id) {
                                 isAdmin = true;
@@ -56,20 +55,18 @@ router.get('/chat/:permalink', isAuth, function (req, res) {
 
                     }
                     else {
-                        console.log("****Channel****");
-                        console.log("User not allowed");
+
                         res.redirect('/channel/all/');
                     }
                 } else {
-                    console.log("User not allowed");
+
                     res.redirect('/channel/all/');
 
                 }
             });
 
         } else {
-            console.log("****Channel****");
-            console.log("User not allowed");
+
             res.redirect('/channel/all/');
         }
     });
@@ -80,11 +77,11 @@ router.post('/create', isAuth, function (req, res) {
     let nChannel = new Channel;
     Channel.findOne({'name': req.body.name}, function (err, channel) {
         if (err) {
-            console.log('error---');
+
             throw err;
         }
         if (channel) {
-            console.log("hey you have already this channel");
+
             res.redirect("/channel/info/" + channel.permalink);
             //  channel.authorizedMembers.push(req.user);
             //   channel.save();
@@ -92,8 +89,6 @@ router.post('/create', isAuth, function (req, res) {
             nChannel.creationDate = new Date();
             nChannel.updateDate = new Date();
             nChannel.name = req.body.name;
-            console.log("****User info****");
-            console.log(req.user);
 
             nChannel.adminMembers.push(req.user);
             nChannel.authorizedMembers.push(req.user);
@@ -103,12 +98,11 @@ router.post('/create', isAuth, function (req, res) {
             });
             nChannel.save(function (err) {
                 if (err) {
-                    console.log("****Merde****");
                     throw err;
                 }
             });
-            console.log("****Fine****");
-            console.log('ok channel');
+
+
             res.redirect("/channel/info/" + nChannel.permalink);
         }
     });
@@ -129,20 +123,15 @@ router.get('/info/:permalink', isAuth, function (req, res) {
                 }
             }
             if (isHere) {
-                console.log("****Channel****");
-                console.log("Yo");
-                //Need to redirect to the channel
+
                 res.render('channel/info', {channel: channel});
 
             }
             else {
-                console.log("****Channel****");
-                console.log("User not allowed");
+
                 res.redirect('/channel/all/');
             }
         } else {
-            console.log("****Channel****");
-            console.log("User not allowed");
             res.redirect('/channel/all/');
         }
 
@@ -202,7 +191,7 @@ router.get('/join/:permalink', isAuth, function (req, res) {
                 }
             }
             else {
-                console.log("user is not in req or channel");
+
                 res.redirect('/channel/all');
             }
         }
@@ -240,7 +229,7 @@ router.post('/quit/:permalink', isAuth, function (req, res) {
                     channel.authorizedMembers.remove(req.user);
                     channel.save(function (err) {
                         if (err) {
-                            console.log("****Merde****");
+
                             throw err;
                         }
                     });
@@ -249,12 +238,12 @@ router.post('/quit/:permalink', isAuth, function (req, res) {
                     //  res.render('channel/info', {channel: channel});
 
                 } else {
-                    console.log("User not found .....");
+
                     res.redirect('/channel/info/' + channel.permalink);
                 }
             }
             else {
-                console.log("user is not in req or channel");
+
                 res.redirect('/channel/all');
             }
         }
@@ -276,19 +265,16 @@ router.get('/admin/be-admin/:permalink', isAuth, function (req, res) {
             }
 
             if (isHere) {
-                console.log("****Channel****");
-                console.log("Yo");
-                //Need to redirect to the channel
+
                 res.render('channel/admin/be-admin', {channel: channel});
 
             } else {
-                console.log("****Channel****");
-                console.log("User not allowed");
+
                 res.redirect('/channel/info/' + channel.permalink);
             }
         }
         else {
-            console.log("user is not in req or channel");
+
             res.redirect('/channel/all');
         }
 
@@ -298,13 +284,13 @@ router.get('/admin/be-admin/:permalink', isAuth, function (req, res) {
 
 router.post('/admin/be-admin/:permalink', isAuth, function (req, res) {
 
-    console.log("****Channel****");
-    console.log(req.body.admin);
+
+
     Channel.findOne({permalink: req.params.permalink}).populate('authorizedMembers').populate("adminMembers").exec(function (err, channel) {
         if (err) {
             throw err;
         }
-        console.log("****Channel2****");
+
         if (req.user && channel) {
             var isAdmin = false;
             for (var y = 0; y < channel.adminMembers.length; y++) {
@@ -313,8 +299,7 @@ router.post('/admin/be-admin/:permalink', isAuth, function (req, res) {
                 }
             }
             if (isAdmin) {
-                console.log("****Channel****");
-                console.log("User is Already admin .....");
+
                 res.redirect('/channel/info/' + channel.permalink);
 
             } else {
@@ -326,18 +311,17 @@ router.post('/admin/be-admin/:permalink', isAuth, function (req, res) {
                         channel.adminMembers.push(user);
                         channel.save(function (err) {
                             if (err) {
-                                console.log("****Merde****");
+
                                 throw err;
                             }
                         });
                     }
                 });
-                console.log("****Channel****");
-                console.log("Success Negga");
+
                 res.redirect('/channel/info/' + channel.permalink);
             }
         } else {
-            console.log("user is not in req or channel");
+
             res.redirect('/channel/all');
         }
     });
@@ -357,18 +341,17 @@ router.get('/admin/delete-user/:permalink', isAuth, function (req, res) {
             }
 
             if (isHere) {
-                console.log("****Channel****");
+
 
                 res.render('channel/admin/delete-user', {channel: channel});
 
             } else {
-                console.log("****Channel****");
-                console.log("User not allowed");
+
                 res.redirect('/channel/info/' + channel.permalink);
             }
         }
         else {
-            console.log("user is not in req or channel");
+
             res.redirect('/channel/all');
         }
 
@@ -377,13 +360,12 @@ router.get('/admin/delete-user/:permalink', isAuth, function (req, res) {
 
 router.post('/admin/delete-user/:permalink', isAuth, function (req, res) {
 
-    console.log("****Channel****");
-    console.log(req.body.todelete);
+
     Channel.findOne({permalink: req.params.permalink}).populate('authorizedMembers').populate("adminMembers").exec(function (err, channel) {
         if (err) {
             throw err;
         }
-        console.log("****Channel2****");
+
 
         if (req.user && channel) {
             var isOkToDelete = false;
@@ -399,7 +381,7 @@ router.post('/admin/delete-user/:permalink', isAuth, function (req, res) {
                 }
             }
             if (isOkToDelete) {
-                console.log("****Channel****");
+
                 User.findById(req.body.todelete, function (err, user) {
                     if (err) {
                         throw err;
@@ -411,7 +393,7 @@ router.post('/admin/delete-user/:permalink', isAuth, function (req, res) {
                         channel.authorizedMembers.remove(user);
                         channel.save(function (err) {
                             if (err) {
-                                console.log("****Merde****");
+
                                 throw err;
                             }
                         });
@@ -422,7 +404,7 @@ router.post('/admin/delete-user/:permalink', isAuth, function (req, res) {
                                 messages[i].published = false;
                                 messages[i].save(function (err) {
                                     if (err) {
-                                        console.log("****Merde****");
+
                                         throw err;
                                     }
                                 });
@@ -431,24 +413,23 @@ router.post('/admin/delete-user/:permalink', isAuth, function (req, res) {
                         user.isActivated = false;
                         user.save(function (err) {
                             if (err) {
-                                console.log("****Merde****");
+
                                 throw err;
                             }
                         });
                     }
                 });
-                console.log("User will be delete");
+
                 res.redirect('/channel/info/' + channel.permalink);
 
             } else {
                 /**/
-                console.log("user is not in req or channel");
+
                 res.redirect('/channel/all');
             }
         }
     });
 });
-
 
 router.get('/admin/censor-user/:permalink', isAuth, function (req, res) {
     Channel.findOne({permalink: req.params.permalink}).sort({'creationDate': -1}).populate('authorizedMembers').populate("adminMembers").exec(function (err, channel) {
@@ -464,17 +445,16 @@ router.get('/admin/censor-user/:permalink', isAuth, function (req, res) {
             }
 
             if (isHere) {
-                console.log("****Channel****");
+
                 res.render('channel/admin/censor-user', {channel: channel});
 
             } else {
-                console.log("****Channel****");
-                console.log("User not allowed");
+
                 res.redirect('/channel/info/' + channel.permalink);
             }
         }
         else {
-            console.log("user is not in req or channel");
+
             res.redirect('/channel/all');
         }
 
@@ -483,13 +463,12 @@ router.get('/admin/censor-user/:permalink', isAuth, function (req, res) {
 
 router.post('/admin/censor-user/:permalink', isAuth, function (req, res) {
 
-    console.log("****Channel****");
-    console.log(req.body.tocensor);
+
     Channel.findOne({permalink: req.params.permalink}).populate('authorizedMembers').populate("adminMembers").exec(function (err, channel) {
         if (err) {
             throw err;
         }
-        console.log("****Channel2****");
+
 
         if (req.user && channel) {
             var isOkToCensor = false;
@@ -505,7 +484,7 @@ router.post('/admin/censor-user/:permalink', isAuth, function (req, res) {
                 }
             }
             if (isOkToCensor) {
-                console.log("****Channel****");
+
                 User.findById(req.body.tocensor, function (err, user) {
                     if (err) {
                         throw err;
@@ -516,7 +495,7 @@ router.post('/admin/censor-user/:permalink', isAuth, function (req, res) {
                         }
                         channel.save(function (err) {
                             if (err) {
-                                console.log("****Merde****");
+
                                 throw err;
                             }
                         });
@@ -531,19 +510,19 @@ router.post('/admin/censor-user/:permalink', isAuth, function (req, res) {
                         user.censor = true;
                         user.save(function (err) {
                             if (err) {
-                                console.log("****Merde****");
+
                                 throw err;
                             }
                         });
 
                     }
                 });
-                console.log("User will be delete");
+
                 res.redirect('/channel/info/' + channel.permalink);
 
             } else {
                 /**/
-                console.log("user is not in req or channel");
+
                 res.redirect('/channel/all');
             }
         }
@@ -564,17 +543,16 @@ router.get('/admin/kick-user/:permalink', isAuth, function (req, res) {
             }
 
             if (isHere) {
-                console.log("****Channel****");
+
                 res.render('channel/admin/kick-user', {channel: channel});
 
             } else {
-                console.log("****Channel****");
-                console.log("User not allowed");
+
                 res.redirect('/channel/info/' + channel.permalink);
             }
         }
         else {
-            console.log("user is not in req or channel");
+
             res.redirect('/channel/all');
         }
 
@@ -583,13 +561,12 @@ router.get('/admin/kick-user/:permalink', isAuth, function (req, res) {
 
 router.post('/admin/kick-user/:permalink', isAuth, function (req, res) {
 
-    console.log("****Channel****");
-    console.log(req.body.tokick);
+
     Channel.findOne({permalink: req.params.permalink}).populate('authorizedMembers').populate("adminMembers").exec(function (err, channel) {
         if (err) {
             throw err;
         }
-        console.log("****Channel2****");
+
 
         if (req.user && channel) {
             var isOkToKick = false;
@@ -605,7 +582,7 @@ router.post('/admin/kick-user/:permalink', isAuth, function (req, res) {
                 }
             }
             if (isOkToKick) {
-                console.log("****Channel****");
+
                 User.findById(req.body.tokick, function (err, user) {
                     if (err) {
                         throw err;
@@ -618,14 +595,14 @@ router.post('/admin/kick-user/:permalink', isAuth, function (req, res) {
 
                         channel.save(function (err) {
                             if (err) {
-                                console.log("****Merde****");
+
                                 throw err;
                             }
                         });
                         user.kicked++;
                         user.save(function (err) {
                             if (err) {
-                                console.log("****Merde****");
+
                                 throw err;
                             }
                         });

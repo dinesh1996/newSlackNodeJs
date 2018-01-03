@@ -9,7 +9,7 @@ var Message = mongoose.model('Message');
 
 router.get('/profile/:permalink', isAuth, function (req, res) {
     User.findOne({permalink: req.params.permalink}, function (err, items) {
-        console.log(items);
+
         if (err) {
             res.redirect('/')
 
@@ -21,7 +21,7 @@ router.get('/profile/:permalink', isAuth, function (req, res) {
 
 router.get('/all', isAuth, function (req, res) {
     User.find({}, function (err, items) {
-        console.log(items);
+
         if (err) {
             res.redirect('/')
 
@@ -46,8 +46,8 @@ router.get('/super-admin/remover/channel', isAuth, function (req, res) {
                     res.render('channel/admin/remover-channel', {channels: channels});
 
                 } else {
-                    console.log("****Channel****");
-                    console.log("User not allowed");
+
+
                     res.redirect('/channel/info/' + channel.permalink);
                 }
 
@@ -59,13 +59,13 @@ router.get('/super-admin/remover/channel', isAuth, function (req, res) {
 
 router.post('/super-admin/remover/channel', isAuth, function (req, res) {
 
-    console.log("****Channel****");
-    console.log(req.body.todelete);
+
+
     Channel.findById(req.body.todelete).populate('authorizedMembers').populate("adminMembers").exec(function (err, channel) {
         if (err) {
             throw err;
         }
-        console.log("****Channel2****");
+
 
         if (channel) {
             Message.find({'channel': channel}).populate('author').populate('emotions').populate('channel').exec(function (err, messages) {
@@ -82,7 +82,7 @@ router.post('/super-admin/remover/channel', isAuth, function (req, res) {
                 });
             });
         } else {
-            console.log("user is not in req or channel");
+
             res.redirect('/channel/all');
         }
     });

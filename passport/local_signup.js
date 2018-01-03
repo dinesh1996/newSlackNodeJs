@@ -20,11 +20,11 @@ module.exports = function (passport) {
             User.findOne({'username': username}, function (err, user) {
                     if (err) {
 
-                        console.log('Error in sign up' + err);
+
                         return done(err, false, {message: 'Error in sign up' + err});
                     }
                     if (user) {
-                        console.log("User already exists");
+
 
                         return done(null, false, {message: 'User already exists'});
                     }
@@ -51,10 +51,10 @@ module.exports = function (passport) {
 
                         nUser.save(function (err) {
                             if (err) {
-                                console.log("Shit, something went wrong");
+
                                 throw err;
                             }
-                            console.log('User created ! Yay !');
+
                             return done(null, nUser);
                         });
                     }

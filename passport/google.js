@@ -29,9 +29,7 @@ module.exports = function (passport) {
                         var nUser = new User();
                         permalinks = new Permalinks();
 
-                        console.log("********Session Info******");
-                        console.log(profile);
-                        console.log("********The End******");
+
 
                         nUser.creationDate = new Date();
                         // nUser.username = req.session.username;

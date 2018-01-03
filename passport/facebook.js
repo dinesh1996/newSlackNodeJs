@@ -26,9 +26,7 @@ module.exports = function (passport) {
                             return done(err, false, {message: 'User was delete for good reasons'});
                         }
                     } else {
-                        console.log('*********************');
-                        console.log(profile);
-                        console.log('*********************');
+
 
                         var nUser = new User();
                         permalinks = new Permalinks();

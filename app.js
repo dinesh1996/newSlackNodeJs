@@ -104,7 +104,7 @@ io.adapter(ioRedis({host: 'localhost', port: 6379}));
 app.set('socketio', io);
 
 sticky.listen(server, port, function () {
-    console.log('Server started listening on port : ' + port);
+
 });
 server.listen(port);
 

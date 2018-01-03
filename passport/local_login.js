@@ -18,11 +18,11 @@ module.exports = function (passport) {
                         if (err)
                             return done(err);
                         if (!user) {
-                            console.log("User not found with username " + username);
+
                             return done(null, false, {message: "User or/and password was/were wrong"});
                         }
                         if (typeof user.password === 'undefined' || !isValidPassword(user, password)) {
-                            console.log("Invalid password");
+
                             return done(null, false, {message: "User or/and password was/were wrong"});
 
                         }
