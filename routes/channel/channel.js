@@ -285,7 +285,6 @@ router.get('/admin/be-admin/:permalink', isAuth, function (req, res) {
 router.post('/admin/be-admin/:permalink', isAuth, function (req, res) {
 
 
-
     Channel.findOne({permalink: req.params.permalink}).populate('authorizedMembers').populate("adminMembers").exec(function (err, channel) {
         if (err) {
             throw err;
@@ -608,11 +607,11 @@ router.post('/admin/kick-user/:permalink', isAuth, function (req, res) {
                         });
                     }
                 });
-                console.log("User will be delete");
+
                 res.redirect('/channel/info/' + channel.permalink);
 
             } else {
-                console.log("user is not in req or channel");
+
                 res.redirect('/channel/all');
             }
         }
@@ -633,17 +632,17 @@ router.get('/admin/ban-user/:permalink', isAuth, function (req, res) {
             }
 
             if (isHere) {
-                console.log("****Channel****");
+
                 res.render('channel/admin/ban-user', {channel: channel});
 
             } else {
-                console.log("****Channel****");
-                console.log("User not allowed");
+
+
                 res.redirect('/channel/info/' + channel.permalink);
             }
         }
         else {
-            console.log("user is not in req or channel");
+
             res.redirect('/channel/all');
         }
 
@@ -652,13 +651,10 @@ router.get('/admin/ban-user/:permalink', isAuth, function (req, res) {
 
 router.post('/admin/ban-user/:permalink', isAuth, function (req, res) {
 
-    console.log("****Channel****");
-    console.log(req.body.tokick);
     Channel.findOne({permalink: req.params.permalink}).populate('authorizedMembers').populate("adminMembers").exec(function (err, channel) {
         if (err) {
             throw err;
         }
-        console.log("****Channel2****");
 
         if (req.user && channel) {
             var isOkToBan = false;
@@ -674,7 +670,6 @@ router.post('/admin/ban-user/:permalink', isAuth, function (req, res) {
                 }
             }
             if (isOkToBan) {
-                console.log("****Channel****");
                 User.findById(req.body.toban, function (err, user) {
                     if (err) {
                         throw err;
@@ -687,24 +682,20 @@ router.post('/admin/ban-user/:permalink', isAuth, function (req, res) {
                         channel.bannedMember.push(user);
                         channel.save(function (err) {
                             if (err) {
-                                console.log("****Merde****");
                                 throw err;
                             }
                         });
                         user.kicked++;
                         user.save(function (err) {
                             if (err) {
-                                console.log("****Merde****");
                                 throw err;
                             }
                         });
                     }
                 });
-                console.log("User will be delete");
                 res.redirect('/channel/info/' + channel.permalink);
 
             } else {
-                console.log("user is not in req or channel");
                 res.redirect('/channel/all');
             }
         }

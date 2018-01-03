@@ -30,7 +30,7 @@ module.exports = function (passport) {
 
                             return done(null, user);
                         }
-                    return done(null, false, {message: "User or/and password was/were wrong"});
+                        return done(null, false, {message: "User or/and password was/were wrong"});
 
                     }
                 );

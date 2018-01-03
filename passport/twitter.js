@@ -30,8 +30,6 @@ module.exports = function (passport) {
                         var nUser = new User();
                         permalinks = new Permalinks();
 
-
-
                         nUser.creationDate = new Date();
                         nUser.username = profile.username;
                         let name = profile.displayName.split(" ");

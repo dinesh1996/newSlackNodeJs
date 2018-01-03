@@ -33,7 +33,6 @@ router.get('/facebook/callback', passport.authenticate('facebook', {
 router.get('/username/facebook', function (req, res) {
 
 
-
     if (Object.keys(req.session.passport).length === 0) {
         res.render('auth/username/faceBook', {message: req.flash('error')});
     } else {
@@ -63,8 +62,8 @@ router.post('/username/facebook', function (req, res) {
         } else {
 
             nUser.creationDate = new Date();
-            nUser.isActivated= true;
-            nUser.kicked= 0;
+            nUser.isActivated = true;
+            nUser.kicked = 0;
             nUser.username = req.body.username;
             nUser.firstName = req.session.user.firstName;
             nUser.lastName = req.session.user.lastName;
@@ -84,7 +83,7 @@ router.post('/username/facebook', function (req, res) {
 
             nUser.save(function (err) {
                 if (err) {
-                   ;
+                    ;
                     throw err;
                 }
 
@@ -242,7 +241,7 @@ router.post('/username/twitter', function (req, res) {
 
                     throw err;
                 }
-              ;
+                ;
             });
             if (validator.equals(req.session.authType, "Twitter")) {
 

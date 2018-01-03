@@ -22,9 +22,10 @@ var EmotionSchema = new Schema({
         required: true
     },
 
-    message:{
+    message: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Message"},
+        ref: "Message"
+    },
 
     author: {
         type: mongoose.Schema.Types.ObjectId,

@@ -60,7 +60,6 @@ router.get('/super-admin/remover/channel', isAuth, function (req, res) {
 router.post('/super-admin/remover/channel', isAuth, function (req, res) {
 
 
-
     Channel.findById(req.body.todelete).populate('authorizedMembers').populate("adminMembers").exec(function (err, channel) {
         if (err) {
             throw err;

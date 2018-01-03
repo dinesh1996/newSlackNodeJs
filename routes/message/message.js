@@ -24,7 +24,6 @@ router.post('/create/', isAuth, function (req, res) {
             nMessage.channel = req.session.channel;
             nMessage.save(function (err) {
                 if (err) {
-                    console.log("****Merde****");
                     throw err;
                 }
             });
@@ -42,14 +41,10 @@ router.post('/create/', isAuth, function (req, res) {
 
 
 router.post('/delete/:messageID', isAuth, function (req, res) {
-    console.log("****Channel****");
-    console.log(req.params.messageID);
     Message.findById(req.params.messageID).populate('author').populate("channel").populate('emotions').exec(function (err, message) {
         if (err) {
             throw err;
         }
-        console.log("****Channel2****");
-
         if (message) {
             var isOkToDelete = false;
 
@@ -76,18 +71,15 @@ router.post('/delete/:messageID', isAuth, function (req, res) {
                         }
                         message.save(function (err) {
                             if (err) {
-                                console.log("****Merde****");
                                 throw err;
                             }
                         });
                     });
                 }
             });
-            console.log("User will be delete");
             res.redirect('/channel/chat/' + message.channel.permalink);
 
         } else {
-            console.log("user is not in req or channel");
             res.redirect('/channel/all');
         }
     });
@@ -95,14 +87,10 @@ router.post('/delete/:messageID', isAuth, function (req, res) {
 });
 
 router.post('/censor/:messageID', isAuth, function (req, res) {
-    console.log("****Channel****");
-    console.log(req.params.messageID);
     Message.findById(req.params.messageID).populate('author').populate("channel").populate('emotions').exec(function (err, message) {
         if (err) {
             throw err;
         }
-        console.log("****Channel2****");
-
         if (message) {
             var isOkToDelete = false;
 
@@ -125,22 +113,18 @@ router.post('/censor/:messageID', isAuth, function (req, res) {
                         }
                         message.save(function (err) {
                             if (err) {
-                                console.log("****Merde****");
                                 throw err;
                             }
                         });
                     });
                 }
             });
-            console.log("User will be delete");
             res.redirect('/channel/chat/' + message.channel.permalink);
 
         } else {
-            console.log("user is not in req or channel");
             res.redirect('/channel/all');
         }
     });
-
 });
 module.exports = router;
 

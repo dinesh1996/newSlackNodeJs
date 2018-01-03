@@ -18,7 +18,6 @@ const client = redis.createClient();
 const port = 3000;
 
 
-
 const User = require('./models/user');
 const Channel = require('./models/channel');
 const Emotion = require('./models/emotion');
@@ -109,7 +108,7 @@ sticky.listen(server, port, function () {
 server.listen(port);
 
 io.on('connection', socket => {
-    socket.emit("HELLO", { hello: 'world' });
+    socket.emit("HELLO", {hello: 'world'});
 });
 server.on('error', onError);
 server.on('listening', onListening);

@@ -24,13 +24,11 @@ router.post('/create/:messageID', isAuth, function (req, res) {
                     message.emotions.push(nEmotion);
                     message.save(function (err) {
                         if (err) {
-                            console.log("****Merde****");
                             throw err;
                         }
                     });
                     nEmotion.save(function (err) {
                         if (err) {
-                            console.log("****Merde****");
                             throw err;
                         }
                         Emotion.create(nEmotion, function (err, item) {

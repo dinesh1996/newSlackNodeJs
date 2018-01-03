@@ -1,4 +1,3 @@
-// var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bCrypt = require('bcrypt-nodejs');
 var mongoose = require('mongoose');

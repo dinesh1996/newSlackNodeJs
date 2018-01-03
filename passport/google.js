@@ -15,7 +15,6 @@ module.exports = function (passport) {
                 User.findOne({'google.id': profile.id}, function (err, user) {
                     if (err)
                         return done(err);
-
                     if (user) {
                         if (user.isActivated) {
                             req.session.authType = "Google";
@@ -25,14 +24,10 @@ module.exports = function (passport) {
                             return done(err, false, {message: 'User was delete for good reasons'});
                         }
                     } else {
-
                         var nUser = new User();
                         permalinks = new Permalinks();
 
-
-
                         nUser.creationDate = new Date();
-                        // nUser.username = req.session.username;
                         nUser.firstName = profile.name.givenName;
                         nUser.lastName = profile.name.familyName;
                         nUser.email = profile.emails[0].value;
@@ -40,7 +35,6 @@ module.exports = function (passport) {
                         nUser.google.token = token;
                         req.session.authType = "Google";
                         req.session.user = nUser;
-
                         return done(null, nUser);
                     }
                 })

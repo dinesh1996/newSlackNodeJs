@@ -26,8 +26,6 @@ module.exports = function (passport) {
                             return done(err, false, {message: 'User was delete for good reasons'});
                         }
                     } else {
-
-
                         var nUser = new User();
                         permalinks = new Permalinks();
 
@@ -42,8 +40,6 @@ module.exports = function (passport) {
                         req.session.authType = "FaceBook";
                         req.session.user = nUser;
                         return done(null, nUser);
-
-
                     }
                 })
             }
