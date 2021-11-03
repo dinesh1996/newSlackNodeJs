@@ -36,6 +36,6 @@
     "socket.io": "^2.0.4",
     "socket.io-redis": "^5.2.0",
     "sticky-session": "^1.1.2",
-    "validator": "^9.2.0"
+    "validator": "^13.7.0"
   }
 }
