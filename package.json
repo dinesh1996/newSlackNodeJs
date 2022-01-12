@@ -20,7 +20,7 @@
     "flash": "^1.1.0",
     "is-empty": "^1.2.0",
     "jade": "~1.11.0",
-    "markdown-it": "^8.4.0",
+    "markdown-it": "^12.3.2",
     "md5": "^2.2.1",
     "mongoose": "^4.13.6",
     "morgan": "~1.9.0",
